@@ -10,7 +10,7 @@ then
 
 or
 
-`docker-compose up -d` to run un background
+`docker-compose up -d` to run in background
 
 # Output
 
