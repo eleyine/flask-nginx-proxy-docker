@@ -1,4 +1,4 @@
-Proof-of-concept project to run many flask-uwsgi-nginx docker containers on the same host port (here, `8080`) with different url paths using nginx reverse proxy.
+Proof-of-concept project to run many flask-uwsgi-nginx docker containers on the same host port (`8080`) with different url paths using nginx reverse proxy.
 
 # Usage
 
