@@ -1,0 +1,48 @@
+version: '2'
+services:
+  app1:
+    build: ./docker-app-1/
+    volumes:
+      - ./docker-app-1/app:/app
+    ports:
+      - "5000:5000"
+    environment:
+      - LISTEN_PORT=5000 # nginx listen port
+      - FLASK_APP=main.py
+      - FLASK_DEBUG=1
+      - 'RUN=flask run --host=0.0.0.0 --port=5000'
+    # uncomment next line to run local flask server (for debugging purposes)
+    # command: flask run --host=0.0.0.0 --port=5000
+    depends_on:
+        - reverseproxy
+  app2:
+    build: ./docker-app-2/
+    volumes:
+      - ./docker-app-2/app:/app
+    ports:
+      - "5001:5001"
+    environment:
+      - LISTEN_PORT=5001 # nginx listen port
+      - FLASK_APP=main.py
+      - FLASK_DEBUG=1
+      - 'RUN=flask run --host=0.0.0.0 --port=5001'
+    # uncomment next line to run local flask server (for debugging purposes)
+    # command: flask run --host=0.0.0.0 --port=5001
+    depends_on:
+        - reverseproxy
+  reverseproxy:
+    build: ./reverseproxy/
+    image: reverseproxy
+    ports:
+        - 8080:8080
+    restart: always
+  # nginx:
+  #   depends_on:
+  #       - reverseproxy
+  #   image: nginx:alpine
+  #   restart: always
+  # apache:
+  #   depends_on:
+  #       - reverseproxy
+  #   image: httpd:alpine
+  #   restart: always
